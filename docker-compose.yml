@@ -1,0 +1,17 @@
+services:
+  go-rpi-gpio-api:
+    container_name: go-rpi-gpio-api
+    image: registry.gitlab.com/bobymcbobs/go-rpi-gpio-api:latest
+    privileged: true
+    networks:
+      - gpio-api
+  garage-controller:
+    container_name: garage-controller
+    build: .
+    ports:
+      - 9000:9000
+    networks:
+      - gpio-api
+
+networks:
+  gpio-api:
