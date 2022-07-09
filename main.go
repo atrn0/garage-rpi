@@ -27,6 +27,12 @@ func main() {
 	})
 
 	e.POST("/open", func(c echo.Context) error {
+		if err := push(stopPIN); err != nil {
+			return err
+		}
+
+		time.Sleep(100 * time.Millisecond)
+
 		if err := push(openPIN); err != nil {
 			return err
 		}
@@ -43,6 +49,12 @@ func main() {
 	})
 
 	e.POST("/close", func(c echo.Context) error {
+		if err := push(stopPIN); err != nil {
+			return err
+		}
+
+		time.Sleep(100 * time.Millisecond)
+
 		if err := push(closePIN); err != nil {
 			return err
 		}
@@ -69,7 +81,7 @@ func push(pin int) error {
 		res.Body.Close()
 	}
 
-	time.Sleep(500 * time.Millisecond)
+	time.Sleep(100 * time.Millisecond)
 
 	{
 		res, err := http.Post(baseURL+"/pin/"+strconv.Itoa(pin)+"/1", "application/json", nil)
